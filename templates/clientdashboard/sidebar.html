@@ -1,0 +1,27 @@
+{% load static %}
+<div class="left-sidebar-pro">
+    <nav id="sidebar" class="">
+        <div class="sidebar-header" style="padding-bottom: 30px;">
+            <a href="{% url "accuilepage" %}"><img class="main-logo" src="{% static 'images/project-logo - Copie.png'%}" alt="" /></a>
+            <strong><a href="{% url "accuilepage" %}"><img src="{% static 'images/project-logo - Copie1.png'%}" alt="" /></a></strong>
+        </div>
+        <div class="left-custom-menu-adp-wrap comment-scrollbar">
+            <nav class="sidebar-nav left-sidebar-menu-pro">
+                <ul class="metismenu" id="menu1">
+                    <li>
+                        <a title="Landing Page" href="{% url "clientdashboard" %}" aria-expanded="false"><span class="fa fa-shopping-cart"></span><span class="mini-click-non" style="padding-left: 10px;">Orderes</span></a>
+                    </li>
+                    <li>
+                      <a title="Landing Page" href="{% url "clientcontactus" %}" aria-expanded="false"><span class="fa fa-envelope"></span><span class="mini-click-non" style="padding-left: 10px;">Contact us</span></a>
+                    </li> 
+                    <li>
+                    <a title="Landing Page" href="{% url "clientsettings" %}" aria-expanded="false"><span class="fa fa-cog"></span><span class="mini-click-non" style="padding-left: 10px;">Settings</span></a>
+                    </li>
+                    <li>
+                      <a title="Landing Page" href="{% url 'logout' %}" aria-expanded="false"><span class="fa fa-sign-in"></span><span class="mini-click-non" style="padding-left: 10px;">Log out</span></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </nav>
+</div>

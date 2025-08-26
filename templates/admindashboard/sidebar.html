@@ -1,0 +1,110 @@
+{% load static %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+      <a class="sidebar-brand brand-logo" href="{% url "accuilepage" %}"><img src="{% static 'images/project-logo - Copie.png'%}" alt="logo" /></a>
+      <a class="sidebar-brand brand-logo-mini" href="{% url "accuilepage" %}"><img src="{% static 'images/project-logo - Copie1.png'%}" alt="logo" /></a>
+    </div>
+    <ul class="nav">
+      <li class="nav-item profile">
+        <div class="profile-desc">
+          <div class="profile-pic">
+            <div class="count-indicator">
+              <img class="img-xs rounded-circle " src="{{ request.user.image.url }}" alt="">
+              <span class="count bg-success"></span>
+            </div>
+            <div class="profile-name">
+              <h5 class="mb-0 font-weight-normal">Admin Dashboard</h5>
+              <span>Gold Member</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item nav-category">
+        <span class="nav-link">Navigation</span>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{% url 'admindashboard'%}">
+          <span class="menu-icon">
+            <i class="mdi mdi-speedometer"></i>
+          </span>
+          <span class="menu-title">Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#client" aria-expanded="false" aria-controls="ui-basic">
+          <span class="menu-icon">
+            <i class="mdi mdi-account-group"></i>
+          </span>
+          <span class="menu-title">Clients</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="client">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="{% url 'client'%}">All Clients</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'newclient'%}">Add New Client</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+          <span class="menu-icon">
+            <i class="mdi mdi-sale"></i>
+          </span>
+          <span class="menu-title">Offers</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="{% url 'offers'%}">All Offers</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'newoffer'%}">Add New Offer</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#category" aria-expanded="false" aria-controls="ui-basic">
+          <span class="menu-icon">
+            <i class="mdi mdi-view-grid"></i>
+          </span>
+          <span class="menu-title">Categorys</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="category">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="{% url 'category'%}">All Categorys</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'newcategory'%}">Add New Category</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#promotion" aria-expanded="false" aria-controls="ui-basic">
+          <span class="menu-icon">
+            <i class="mdi mdi-tag"></i>
+          </span>
+          <span class="menu-title">Promotion</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="promotion">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="{% url 'promotion'%}">All Promotions</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'newpromotion'%}">Add New Promotion</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{% url 'contactus'%}">
+          <span class="menu-icon">
+            <i class="mdi mdi-contact-mail"></i>
+          </span>
+          <span class="menu-title">Contact Us</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{% url 'settings'%}">
+          <span class="menu-icon">
+            <i class="mdi mdi-settings"></i>
+          </span>
+          <span class="menu-title">Settings</span>
+        </a>
+      </li>
+    </ul>
+  </nav>

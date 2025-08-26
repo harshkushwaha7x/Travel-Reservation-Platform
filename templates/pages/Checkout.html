@@ -1,0 +1,291 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourly - Travel Agency</title>
+
+    <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Required meta tags -->
+    <style>
+        
+        
+        .card {
+            width: 60rem;
+            margin: auto;
+            background: white;
+            position:center;
+            align-self: center;
+            top: 50rem;
+            border-radius: 1.5rem;
+            box-shadow: 4px 3px 20px #3535358c;
+            display:flex;
+            flex-direction: row;
+            
+        }
+        
+        .leftside {
+            background: #ffffff;
+            width: 25rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-top-left-radius: 1.5rem;
+            border-bottom-left-radius: 1.5rem;
+        }
+        
+        .product {
+            object-fit: cover;
+            width: 20em;
+            height: 20em;
+            border-radius: 100%;
+        }
+        
+        .rightside {
+            background-color: #ffffff;
+            width: 35rem;
+            border-bottom-right-radius: 1.5rem;
+            border-top-right-radius: 1.5rem;
+            padding: 1rem 2rem 3rem 3rem;
+        }
+        
+        p{
+            display:block;
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin: .8rem 0;
+        }
+        
+        .inputbox
+        {
+            color:#030303;
+            width: 100%;
+            padding: 0.5rem;
+            border: none;
+            border-bottom: 1.5px solid #ccc;
+            margin-bottom: 1rem;
+            border-radius: 0.3rem;
+            font-family: 'Roboto', sans-serif;
+            color: #615a5a;
+            font-size: 1.1rem;
+            font-weight: 500;
+          outline:none;
+        }
+        
+        .expcvv {
+            display:flex;
+            justify-content: space-between;
+            padding-top: 0.6rem;
+        }
+        
+        .expcvv_text{
+            padding-right: 1rem;
+        }
+        .expcvv_text2{
+            padding:0 1rem;
+        }
+        
+        .button{
+            background: linear-gradient(
+        135deg
+        , #753370 0%, #298096 100%);
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 400;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            width:100%;
+            letter-spacing: .11rem;
+            outline:none;
+        }
+        
+        .button:hover
+        {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 3px 3px 6px #38373785;
+        }
+        
+        @media only screen and (max-width: 1000px) {
+            .card{
+                flex-direction: column;
+                width: auto;
+              
+            }
+        
+            .leftside{
+                width: 100%;
+                border-top-right-radius: 0;
+                border-bottom-left-radius: 0;
+              border-top-right-radius:0;
+              border-radius:0;
+            }
+        
+            .rightside{
+                width:auto;
+                border-bottom-left-radius: 1.5rem;
+                padding:0.5rem 3rem 3rem 2rem;
+              border-radius:0;
+            }
+        }
+        .StripeElement{
+            box-sizing: border-box;
+            height: 40px;
+            padding: 10px 12px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background-color: white;
+            box-shadow: 0 1px 3px 0 #e6ebf1;
+            -webkit-transition: box-shadow 150ms ease; 
+            transition: box-shadow 150ms ease;
+          }
+      
+          .StripeElement--focus{
+            box-shadow: 0 1px 3px 0 #c7d7df;
+          }
+      
+          .StripeElement--invalid{
+            border-color: #fa755a;
+          }
+      
+          .StripeElement--webkit-autofill{
+            background-color: #fefde5 !important;
+          }
+          .StripeElement{
+            box-sizing: border-box;
+            height: 40px;
+            padding: 10px 12px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background-color: white;
+            box-shadow: 0 1px 3px 0 #e6ebf1;
+            -webkit-transition: box-shadow 150ms ease; 
+            transition: box-shadow 150ms ease;
+          }
+      
+          .StripeElement--focus{
+            box-shadow: 0 1px 3px 0 #c7d7df;
+          }
+      
+          .StripeElement--invalid{
+            border-color: #fa755a;
+          }
+      
+          .StripeElement--webkit-autofill{
+            background-color: #fefde5 !important;
+          }
+    </style>
+  </head>
+  <body id="top">
+    {%  include "pages/navbar.html"  %}
+    <main>
+        <main>
+            <article>
+              <section class="hero" id="home">
+                  <div class="mainscreen">
+                  <!-- <img src="https://image.freepik.com/free-vector/purple-background-with-neon-frame_52683-34124.jpg"  class="bgimg " alt="">--> 
+                    <div class="card">
+                      <div class="leftside" style="background-image: url('{% static 'images/payimg.png' %}');">
+                      </div>
+                      <div class="rightside">
+                        <form action="{%url "payment_page"%}" id="payement-form" method = "post">
+                          {% csrf_token %}  
+                          <h2>Payment Information</h2>
+                          <p>Cardholder Name</p>
+                          <input type="text" class="inputbox" name="name" required />
+                          <p>Email</p>
+                          <input type="email" class="inputbox" name="email" required />
+                          <p>Total : {{prix_total}}$</p>
+                              <label for="card-element">Credit or debit card</label>
+                              <div id="card-element">
+                                <!-- a stripe element will be inserted here -->
+                              </div>
+                              <!-- used to dispaly form errors -->
+                              <div id="card-errors" role="alert"></div>
+                              <button type="submit" class="button">CheckOut</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </article>
+        </main>
+    
+            {%  include "pages/footer.html"  %}  
+    </main>
+  </body>
+  </html>
+  <script>
+    var stripe=Stripe('pk_test_51OaJ54AyNfWQ41o0yME7gpGdNXZsY6ug1AihHZYoQ6JnZ4nTd6JRv8VbEJAeX6ekZ96hWNMftr2pcJYFF0cjpEWx00gwGszPhM');
+    var elements  = stripe.elements();
+
+    var style = {
+      base : {
+        color : '#32325d',
+        fontFamily : '"Helvetica Neue",Helvetica,sans-serif',
+        fontSmoothing : 'antialiased',
+        fontSize : '16px',
+        '::placeholder':{
+          color : 'aab7c4'
+        }
+      },
+      invalid : {
+        color : '#fa755a',
+        iconColor:'#fa755a'
+      } 
+    };
+    var card = elements.create('card',{style : style});
+    card.mount('#card-element');
+
+    card.addEventListener('change',function(event){
+      var displayError = document.getElementById('card-errors');
+      if(event.error){
+        displayError.textContent = event.error.message;
+      }else{
+        displayError.textContent='';
+      }
+    });
+
+    var form = document.getElementById('payement-form');
+    form.addEventListener('submit',function(event){
+      event.preventDefault();
+
+      stripe.createToken(card).then(function(result){
+        if(result.error){
+          var errorElement = document.getElementById('card-errors');
+          errorElement.textContent = result.error.message;
+        }else{
+          //send the token to my server
+          stripeTokenHandler(result.token);
+        }
+      });
+    });
+
+    //submit the form with the token id
+    function stripeTokenHandler(token){
+      //insert the token id into the form so its gets submitted to the server
+      var form = document.getElementById('payement-form');
+      var hiddenInput = document.createElement('input');
+      hiddenInput.setAttribute('type','hidden');
+      hiddenInput.setAttribute('name','stripeToken');
+      hiddenInput.setAttribute('value',token.id);
+      form.appendChild(hiddenInput);
+
+      //submit the form
+      form.submit();
+    }
+  </script>
+  

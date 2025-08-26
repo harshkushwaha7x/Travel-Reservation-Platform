@@ -1,0 +1,294 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Dashboard V.1 | Kiaalap - Kiaalap Admin Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'client/css/form/all-type-forms.css'%}">
+
+    <!-- favicon
+		============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <!-- Google Fonts
+		============================================ -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+    <!-- Bootstrap CSS
+		============================================ -->
+    <link rel="stylesheet" href="{% static 'client/css/bootstrap.min.css'%}">
+    <!-- Bootstrap CSS
+		============================================ -->
+    <link rel="stylesheet" href="{% static 'client/css/font-awesome.min.css'%}">
+        <!-- owl.carousel CSS
+    		============================================ -->
+        <link rel="stylesheet" href="{% static 'client/css/owl.carousel.css'%}">
+        <link rel="stylesheet" href="{% static 'client/css/owl.theme.css'%}">
+        <link rel="stylesheet" href="{% static 'client/css/owl.transitions.css'%}">
+        <!-- animate CSS
+    		============================================ -->
+        <link rel="stylesheet" href="{% static 'client/css/animate.css'%}">
+        <!-- normalize CSS
+    		============================================ -->
+        <link rel="stylesheet" href="{% static 'clientcss/normalize.css'%}">
+        <!-- meanmenu icon CSS
+    		============================================ -->
+        <link rel="stylesheet" href="{% static 'client/css/meanmenu.min.css'%}">
+        <!-- main CSS
+    		============================================ -->
+        <link rel="stylesheet" href="{% static 'client/css/main.css'%}">
+        <!-- educate icon CSS
+    		============================================ -->
+        <link rel="stylesheet" href="{% static 'client/css/educate-custon-icon.css'%}">
+        <!-- morrisjs CSS
+    		============================================ -->
+        <link rel="stylesheet" href="{% static 'client/css/morrisjs/morris.css'%}">
+        <!-- mCustomScrollbar CSS
+    		============================================ -->
+        <link rel="stylesheet" href="{% static 'client/css/scrollbar/jquery.mCustomScrollbar.min.css'%}">
+        <!-- metisMenu CSS
+    		============================================ -->
+        <link rel="stylesheet" href="{% static 'client/css/metisMenu/metisMenu.min.css'%}">
+        <link rel="stylesheet" href="{% static 'client/css/metisMenu/metisMenu-vertical.css'%}">
+        <!-- calendar CSS
+    		============================================ -->
+        <link rel="stylesheet" href="{% static 'client/css/calendar/fullcalendar.min.css'%}">
+        <link rel="stylesheet" href="{% static 'client/css/calendar/fullcalendar.print.min.css'%}">
+        <!-- style CSS
+    		============================================ -->
+        <link rel="stylesheet" href="{% static 'client/style.css'%}">
+        <!-- responsive CSS
+    		============================================ -->
+        <link rel="stylesheet" href="{% static 'client/css/responsive.css'%}">
+        <!-- modernizr JS
+    		============================================ -->
+        <script src="{% static 'client/js/vendor/modernizr-2.8.3.min.js'%}"></script>
+    </head>
+
+    <body>
+        <!--[if lt IE 8]>
+    		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    	<![endif]-->
+        <!-- Start Left menu area -->
+        {%  include "clientdashboard/sidebar.html"  %}
+        <!-- End Left menu area -->
+        <!-- Start Welcome area -->
+        <div class="all-content-wrapper" style="padding-left :20px; padding-right :20px;">
+            {%  include "clientdashboard/navbar.html"  %}
+            <div class="static-table-area" style="padding-top: 30px;">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <div class="sparkline8-list">
+                              <div class="sparkline8-hd" style="padding-bottom: 10px;">
+                                  <div class="main-sparkline8-hd">
+                                      <h1>Update Settings</h1>
+                                  </div>
+                              </div>
+                              <form action="{% url 'update_profile'%}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="devit-card-custom">
+                                    <div class="form-group">
+                                        <input name="first_name" type="text" class="form-control" placeholder="First Name" value={{request.user.first_name}}>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="last_name" type="text" class="form-control" placeholder="Last Name" value={{request.user.last_name}}>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="email" type="email" class="form-control" placeholder="Email" value={{request.user.email}}>
+                                    </div>
+                                    <div class="form-group">
+                                                <div class="file-upload-inner ts-forms">
+                                                    <div class="input prepend-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" name="image" onchange="document.getElementById('prepend-small-btn').value = this.value;">
+                                                        </div>
+                                                        <input type="text" id="prepend-small-btn" placeholder="no file selected">
+                                                    </div>
+                                                </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                                </div>
+                              </form>
+                              
+                          </div>
+                      </div>
+                  </div>           
+              </div>
+            </div>
+            <div class="static-table-area" style="padding-top: 30px;">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="sparkline8-list">
+                      <div class="sparkline8-hd" style="padding-bottom: 10px;">
+                        <div class="main-sparkline8-hd">
+                          <h1>Update Password</h1>
+                        </div>
+                      </div>
+                      <form action="{% url 'change_password' %}" method="POST" onsubmit="return validatePassword()">
+                        {% csrf_token %}
+                        <div class="devit-card-custom">
+                          <div class="form-group">
+                            <input name="old_password" id="old_password" type="password" class="form-control" placeholder="Old Password">
+                          </div>
+                          <div class="form-group">
+                            <input name="new_password" id="new_password" type="password" class="form-control" placeholder="New Password">
+                          </div>
+                          <div class="form-group">
+                            <input name="confirm_password" id="confirm_password" type="password" class="form-control" placeholder="Confirm New Password">
+                          </div>
+                          <button type="submit" class="btn btn-primary waves-effect waves-light">Update</button>
+                        </form>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+
+                                <!-- jquery
+                                ============================================ -->
+                                <script src="{% static 'client/js/vendor/jquery-1.12.4.min.js'%}"></script>
+                                <!-- bootstrap JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/bootstrap.min.js'%}"></script>
+                                <!-- wow JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/wow.min.js'%}"></script>
+                                <!-- price-slider JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/jquery-price-slider.js'%}"></script>
+                                <!-- meanmenu JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/jquery.meanmenu.js'%}"></script>
+                                <!-- owl.carousel JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/owl.carousel.min.js'%}"></script>
+                                <!-- sticky JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/jquery.sticky.js'%}"></script>
+                                <!-- scrollUp JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/jquery.scrollUp.min.js'%}"></script>
+                                <!-- counterup JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/counterup/jquery.counterup.min.js'%}"></script>
+                                <script src="{% static 'client/js/counterup/waypoints.min.js'%}"></script>
+                                <script src="{% static 'client/js/counterup/counterup-active.js'%}"></script>
+                                <!-- mCustomScrollbar JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/scrollbar/jquery.mCustomScrollbar.concat.min.js'%}"></script>
+                                <script src="{% static 'client/js/scrollbar/mCustomScrollbar-active.js'%}"></script>
+                                <!-- metisMenu JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/metisMenu/metisMenu.min.js'%}"></script>
+                                <script src="{% static 'client/js/metisMenu/metisMenu-active.js'%}"></script>
+                                <!-- morrisjs JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/morrisjs/raphael-min.js'%}"></script>
+                                <script src="{% static 'client/js/morrisjs/morris.js'%}"></script>
+                                <script src="{% static 'client/js/morrisjs/morris-active.js'%}"></script>
+                                <!-- morrisjs JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/sparkline/jquery.sparkline.min.js'%}"></script>
+                                <script src="{% static 'client/js/sparkline/jquery.charts-sparkline.js'%}"></script>
+                                <script src="{% static 'client/js/sparkline/sparkline-active.js'%}"></script>
+                                <!-- calendar JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/calendar/moment.min.js'%}"></script>
+                                <script src="{% static 'client/js/calendar/fullcalendar.min.js'%}"></script>
+                                <script src="{% static 'client/js/calendar/fullcalendar-active.js'%}"></script>
+                                <!-- plugins JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/plugins.js'%}"></script>
+                                <!-- main JS
+                                ============================================ -->
+                                <script src="{% static 'client/js/main.js'%}"></script>
+
+                                <script>
+                                    // Password and Confirm Password validation
+                                    function validatePassword() {
+                                        var password = document.getElementById("new_password").value;
+                                        var confirmPassword = document.getElementById("confirm_password").value;
+                                        if (password != confirmPassword) {
+                                            alert("Passwords do not match.");
+                                            return false;
+                                        }
+                                        return true;
+                                    }
+                                </script>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- jquery
+        ============================================ -->
+        <script src="{% static 'client/js/vendor/jquery-1.12.4.min.js'%}"></script>
+        <!-- bootstrap JS
+        ============================================ -->
+        <script src="{% static 'client/js/bootstrap.min.js'%}"></script>
+        <!-- wow JS
+        ============================================ -->
+        <script src="{% static 'client/js/wow.min.js'%}"></script>
+        <!-- price-slider JS
+        ============================================ -->
+        <script src="{% static 'client/js/jquery-price-slider.js'%}"></script>
+        <!-- meanmenu JS
+        ============================================ -->
+        <script src="{% static 'client/js/jquery.meanmenu.js'%}"></script>
+        <!-- owl.carousel JS
+        ============================================ -->
+        <script src="{% static 'client/js/owl.carousel.min.js'%}"></script>
+        <!-- sticky JS
+        ============================================ -->
+        <script src="{% static 'client/js/jquery.sticky.js'%}"></script>
+        <!-- scrollUp JS
+        ============================================ -->
+        <script src="{% static 'client/js/jquery.scrollUp.min.js'%}"></script>
+        <!-- counterup JS
+        ============================================ -->
+        <script src="{% static 'client/js/counterup/jquery.counterup.min.js'%}"></script>
+        <script src="{% static 'client/js/counterup/waypoints.min.js'%}"></script>
+        <script src="{% static 'client/js/counterup/counterup-active.js'%}"></script>
+        <!-- mCustomScrollbar JS
+        ============================================ -->
+        <script src="{% static 'client/js/scrollbar/jquery.mCustomScrollbar.concat.min.js'%}"></script>
+        <script src="{% static 'client/js/scrollbar/mCustomScrollbar-active.js'%}"></script>
+        <!-- metisMenu JS
+        ============================================ -->
+        <script src="{% static 'client/js/metisMenu/metisMenu.min.js'%}"></script>
+        <script src="{% static 'client/js/metisMenu/metisMenu-active.js'%}"></script>
+        <!-- morrisjs JS
+        ============================================ -->
+        <script src="{% static 'client/js/morrisjs/raphael-min.js'%}"></script>
+        <script src="{% static 'client/js/morrisjs/morris.js'%}"></script>
+        <script src="{% static 'client/js/morrisjs/morris-active.js'%}"></script>
+        <!-- morrisjs JS
+        ============================================ -->
+        <script src="{% static 'client/js/sparkline/jquery.sparkline.min.js'%}"></script>
+        <script src="{% static 'client/js/sparkline/jquery.charts-sparkline.js'%}"></script>
+        <script src="{% static 'client/js/sparkline/sparkline-active.js'%}"></script>
+        <!-- calendar JS
+        ============================================ -->
+        <script src="{% static 'client/js/calendar/moment.min.js'%}"></script>
+        <script src="{% static 'client/js/calendar/fullcalendar.min.js'%}"></script>
+        <script src="{% static 'client/js/calendar/fullcalendar-active.js'%}"></script>
+        <!-- plugins JS
+        ============================================ -->
+        <script src="{% static 'client/js/plugins.js'%}"></script>
+        <!-- main JS
+        ============================================ -->
+        <script src="{% static 'client/js/main.js'%}"></script>
+        <!-- tawk chat JS
+        ============================================ -->
+    </body>
+
+    </html>

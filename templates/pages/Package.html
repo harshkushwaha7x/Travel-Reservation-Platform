@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourly - Travel Agency</title>
+
+    <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+</head>
+
+<body id="top">
+    {%  include "pages/navbar.html"  %}
+    <main>
+        <main>
+            <article>
+        
+              <section class="hero" id="home">
+                <div class="container">
+        
+                  <h2 class="h1 hero-title">Catgories</h2>
+                  <p class="hero-text">Checkout Our Categories</p>
+                  <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="scrollToSection()">Categories</button>
+                  </div>
+
+                </div>
+              </section>   
+              <section class="popular" id="destination">
+                <div class="container">
+                  <ul class="popular-list">
+                    {% for category in categories %}
+                    <li>
+                      <div class="popular-card">
+                        <figure class="card-img">
+                          {% if category.image %}
+                          <img src="{{ category.image.url }}" alt="{{ category.nom }}" loading="lazy">
+                          {% else %}
+                          <img src="{% static 'images/category1.png' %}" alt="{{ category.nom }}" loading="lazy">
+                          {% endif %}
+                        </figure>
+                        <div class="card-content">
+                          <h3 class="h3 card-title">
+                            <a href="/offers?categorie={{category.id}}">{{ category.nom }}</a>
+                          </h3>
+                          <p class="card-text">
+                            <div class="card-text">
+                              <p class="description">{{ category.description|truncatechars:100 }}</p>
+                            </div>
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </section>
+            </article>
+        </main>
+
+        {%  include "pages/footer.html"  %}
+
+    </main>
+</body>
+</html>
+<script>
+    function scrollToSection() {
+      var section = document.getElementById('destination');
+      if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+</script>

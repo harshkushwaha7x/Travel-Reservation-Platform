@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <title>Tourly - Travel Agency</title>
+
+    <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
+</head>
+<body >
+    <!-- Login 8 - Bootstrap Brain Component -->
+
+  <section class="bg-light p-3 p-md-4 p-xl-5" >
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-xxl-11">
+          <div class="card border-light-subtle shadow-sm" >
+            <div class="row g-0">
+              <div class="col-12 col-md-6">
+                <img class="img-fluid rounded-start w-100 h-100 object-fit-cover" loading="lazy" src="{% static 'images/water-3271579.jpg'%}" alt="Welcome back you've been missed!">
+              </div>
+              <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                <div class="col-12 col-lg-11 col-xl-10">
+                  <div class="card-body p-3 p-md-4 p-xl-5">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="mb-5">
+                          <div class="text-center mb-4">
+                            <a href="{% url 'accuilepage' %}">
+                                <img src="{% static 'images/project-logo - Copie.png'%}" alt="Touly logo">
+                            </a>
+                          </div>
+                          <a href="{% url 'accuilepage' %}" style="text-decoration: none; color: hsl(0, 0%, 0%);">
+                            <h4 >Home</h4>
+                          </a>  
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <form action="{% url 'login_validation'%}" name="login" id="loginForm" method="POST">
+                      {% csrf_token %}
+                      <div class="row gy-3 overflow-hidden">
+                        <div class="col-12">
+                          <div class="form-floating mb-3">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                            <label for="email" class="form-label">Email</label>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-floating mb-3">
+                            <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
+                            <label for="password" class="form-label">Password</label>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                            {% comment %} {% if msg %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ msg }}
+                                </div>
+                            {% endif %} {% endcomment %}
+                            
+                            {%for msg in messages%}
+                            <div class="alert alert-danger" role="alert">
+                              {{ msg }}
+                          </div>
+                          {%endfor%}
+                        </div>
+                        <div class="col-12">
+                        </div>
+                        <div class="col-12">
+                          <div class="d-grid">
+                            <button class="btn btn-dark btn-lg" type="submit">Log in now</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form action="{% url 'signup_validation1' %}" name="sign up" id="signupForm" style="display: none;" method="POST">
+                      {% csrf_token %}
+                      <div class="row gy-3 overflow-hidden">
+                        <div class="col-6">
+                          <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="prenom" id="prenom" placeholder="mohamed" required>
+                            <label for="prenom" class="form-label">Prenom</label>
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="nom" id="nom" placeholder="ait hassoun" required>
+                            <label for="nom" class="form-label">Nom</label>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-floating mb-3">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                            <label for="email" class="form-label">Email</label>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-floating mb-3">
+                            <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
+                            <label for="password" class="form-label">Password</label>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="d-grid">
+                            <button class="btn btn-dark btn-lg" type="submit">Create account</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-center mt-5">
+                          <a href="#!" class="link-secondary text-decoration-none" onclick="toggleForms()" id="singuplink">Create new account</a>
+                          <a href="#!" class="link-secondary text-decoration-none" style="display: none;" onclick="toggleForms()" id="loginlink">Login</a>
+                          <a href="{{'forgot_password'}}" class="link-secondary text-decoration-none" id="forgetpasslink">Forgot password</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
+<script>
+  function toggleForms() {
+    var loginForm = document.getElementById('loginForm');
+    var signupForm = document.getElementById('signupForm');
+    var signupLink = document.getElementById('singuplink');
+    var loginLink = document.getElementById('loginlink');
+    var forgetpassLink = document.getElementById('forgetpasslink');
+
+    if (loginForm.style.display === 'none') {
+      loginForm.style.display = 'block';
+      signupLink.style.display = 'block';
+      forgetpassLink.style.display = 'block';
+      loginLink.style.display = 'none';
+      signupForm.style.display = 'none';
+    } else {
+      loginForm.style.display = 'none';
+      signupLink.style.display = 'none';
+      forgetpassLink.style.display = 'none';
+      loginLink.style.display = 'block';
+      signupForm.style.display = 'block';
+    }
+  }
+</script>

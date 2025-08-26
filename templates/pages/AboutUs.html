@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourly - Travel Agency</title>
+
+    <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+</head>
+
+<body id="top">
+    {%  include "pages/navbar.html"  %}
+    <main>
+        <main>
+            <article>
+        
+              <section class="hero" id="home">
+                <div class="container">
+        
+                  <h2 class="h1 hero-title">About Us</h2>
+    
+
+                  <p class="hero-text">Welcome to Your Travel Agency, where journeys become unforgettable adventures. Founded with a passion for exploration and a commitment to delivering exceptional travel experiences, we take pride in being your trusted partner in crafting memorable trips around the globe.
+
+                  <p class="hero-text">At Your Travel Agency, we believe in the transformative power of travel. Whether you're a thrill-seeker, a culture enthusiast, or someone seeking a serene escape, our diverse range of meticulously curated destinations caters to every traveler's dream. Our dedicated team of travel experts is here to turn your aspirations into reality, ensuring each itinerary is tailored to your preferences and desires.</p>
+          
+                  <p class="hero-text">With a focus on innovation and customer satisfaction, we strive to redefine the way you experience the world. Our commitment to quality, transparency, and personalized service sets us apart in the travel industry. Join us on a journey of discovery and create lasting memories with Your Travel Agency.</p>
+        
+                </div>
+              </section>    
+            </article>
+        </main>
+
+        {%  include "pages/footer.html"  %}
+
+    </main>
+</body>
+</html>

@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin Dashboard</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css'%}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="{% static 'assets/vendors/jvectormap/jquery-jvectormap.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/flag-icon-css/css/flag-icon.min.css '%}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/owl-carousel-2/owl.carousel.min.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/owl-carousel-2/owl.theme.default.min.css'%}">
+    <!-- End plugin css for this page -->
+    <link rel="stylesheet" href="{% static 'assets/vendors/select2/select2.min.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css'%}">
+    <!-- inject:css -->
+
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
+  </head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_sidebar.html -->
+      {%  include "admindashboard/sidebar.html"  %}
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_navbar.html -->
+        {%  include "admindashboard/navbar.html"  %}
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row ">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="card-title">All Clients</h4>
+                            </div>
+                        </div>
+                    </div>                                                         
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> Client id </th>
+                            <th> Full Name </th>
+                            <th> Email </th>
+                            <th> Status </th>
+                            <th> Action </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for client in clients %}
+                            <tr>
+                              <td> {{ client.id }} </td>
+                              <td> <img src="{{ client.image.url }}" alt="" />
+                                {{ client.first_name }} {{ client.last_name }} </td>
+                              <td> {{ client.email }} </td>
+                              <td class="{% if client.is_active %}text-primary{% else %}text-danger{% endif %}">
+                                {% if client.is_active %}
+                                  Active
+                                {% else %}
+                                  Inactive
+                                {% endif %}
+                              </td>
+                              <td class="d-flex">
+                                  <a class="nav-link" data-toggle="modal" href="#editClientModal{{client.id}}" aria-expanded="false" aria-controls="ui-basic" style="margin-right: 0; padding-right: 0; padding-left :6%;">
+                                      <div class="badge badge-outline-success">
+                                          <span class="menu-icon">
+                                              <i class="mdi mdi-pencil"></i>
+                                          </span>
+                                      </div>
+                                  </a>
+                                  <a class="nav-link" data-toggle="modal" href="#deleteClientModal{{client.id}}" aria-expanded="false" aria-controls="ui-basic" style="margin-right: 0; padding-right: 0; padding-left :6%;">
+                                      <div class="badge badge-outline-danger">
+                                          <span class="menu-icon">
+                                              <i class="mdi mdi-delete"></i>
+                                          </span>
+                                      </div>
+                                  </a>
+                              </td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              
+            </div>
+            {% for client in clients %}
+            <div id="editClientModal{{client.id}}" class="modal fade">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <form method="post" action="{% url 'edit_client' client.id %}">
+                    {% csrf_token %}
+                      <div class="modal-header">						
+                        <h4 class="modal-title">Edit Client</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      </div>
+                      <div class="modal-body">					
+                        <div class="form-group">
+                          <label for="first_name">First Name</label>
+                          <input type="text" class="form-control" id="first_name" name="first_name" value="{{ client.first_name }}">
+                        </div>
+                        <div class="form-group">
+                          <label for="last_name">Last Name</label>
+                          <input type="text" class="form-control" id="last_name" name="last_name" value="{{ client.last_name }}">
+                        </div>
+                        <div class="form-group">
+                          <label for="email">Email</label>
+                          <input type="email" class="form-control" id="email" name="email" value="{{ client.email }}">
+                        </div>
+                        <div class="form-group">
+                          <label for="email">Active</label>
+                          <input type="checkbox" class="form-control" id="is_active" name="is_active" {% if client.is_active %} checked {% endif %}>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-primary" value="Save">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              {% for client in clients %}
+              <div id="deleteClientModal{{client.id}}" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form method="post" action="{% url 'delete_client' client.id %}">
+                      {% csrf_token %}
+                        <div class="modal-header">						
+                          <h4 class="modal-title">Delete Client</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">					
+                          <p>Are you sure you want to delete <span class="font-weight-bold mx-1">{{ client.email }}</span>?</p>
+                          <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                          <input type="submit" class="btn btn-danger" value="Delete">
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="{% static 'assets/vendors/js/vendor.bundle.base.js'%}"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="{% static 'assets/vendors/chart.js/Chart.min.js'%}"></script>
+    <script src="{% static 'assets/vendors/progressbar.js/progressbar.min.js'%}"></script>
+   <script src="{% static 'assets/vendors/owl-carousel-2/owl.carousel.min.js'%}"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="{% static 'assets/js/off-canvas.js'%}"></script>
+    <script src="{% static 'assets/js/hoverable-collapse.js'%}"></script>
+    <script src="{% static 'assets/js/misc.js'%}"></script>
+    <script src="{% static 'assets/js/settings.js'%}"></script>
+    <script src="{% static 'assets/js/todolist.js'%}"></script>
+    <script src="{% static 'assets/js/file-upload.js'%}"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="{% static 'assets/js/dashboard.js'%}"></script>
+    <!-- End custom js for this page -->
+    <script src="{% static 'assets/vendors/select2/select2.min.js'%}"></script>
+    <script src="{% static 'assets/vendors/typeahead.js/typeahead.bundle.min.js'%}"></script>
+    
+  </body>
+</html>

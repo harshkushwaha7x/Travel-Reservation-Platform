@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourly - Travel Agency</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+            #sidebar{
+                width: 20%;
+                flex: 0 0 auto;
+                padding: 10px;
+                margin: 0;
+                float: left;
+            }
+            #filterSection div {
+                margin-bottom: 25px; /* Adjust the value as needed to control the space between filters */
+            }
+
+    </style>
+    <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+</head>
+<body id="top">
+
+    {%  include "pages/navbar.html"  %}
+
+    <main>
+        <main>
+            <article>
+        
+              <section class="hero" id="home">
+                <div class="container">
+        
+                  <h2 class="h1 hero-title">All Offers</h2>
+                  <p class="hero-text">Checkout Our Offers</p>
+                  <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="scrollToSection()">Offers</button>
+                  </div>
+        
+                </div>
+              </section>
+              <section class="package" id="package" style="display: flex;">
+                <section id="sidebar">
+                  <div id="filterSection" class="d-flex flex-column align-items-center" style="background-color: hsl(0, 0%, 98%);">
+                    
+                    <form id="filterForm" action="{% url 'offers_page' %}">
+                      <h6 class="p-1" style="margin-bottom: 5px;">Recherche</h6>
+                      <div class="mb-3">
+                        <input name="titre" class="form-control mr-2" placeholder="Titre de l'offre" {% if filters.titre %} value = "{{filters.titre}}" {% endif %}>
+                        <input name="lieu" class="form-control mr-2 mt-3" placeholder="Lieu" {% if filters.lieu %} value = "{{filters.lieu}}" {% endif %}>
+                      </div>
+                      <h6 class="p-1 border-bottom" style="margin-bottom: 25px;">Filters</h6>
+                      <div class="mb-3">
+                        <p class="mb-2">Price Range</p>
+                        <div class="d-flex">
+                          <input type="number" name="minPrice" class="form-control mr-2" placeholder="Min" min="0" value = "{{filters.minPrice}}">
+                          <input type="number" name="maxPrice" class="form-control" placeholder="Max" min="0" value = "{{filters.maxPrice}}">
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <p class="mb-2">Duréé (jours)</p>
+                        <div class="d-flex">
+                          <input type="number" name="minDuration" class="form-control mr-2" placeholder="Min" min="0" value = "{{filters.minDuration}}">
+                          <input type="number" name="maxDuration" class="form-control" placeholder="Max" min="0" value = "{{filters.maxDuration}}">
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <p class="mb-2">Categorie</p>
+                        <select name="categorie" class="form-control">
+                          <option selected value="">Selectionner...</option>
+                          {% for categorie in categories %}
+                          <option value="{{categorie.id}}" {% if categorie.id == filters.categorie %} selected {% endif %}>{{categorie.nom}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                        <p class="mb-2">Sort</p>
+                        <select name="sort" class="form-control">
+                          <option selected value="">Selectionner...</option>
+                          <option value="newest" {% if 'newest' == filters.sort %} selected {% endif %}>Newest</option>
+                          <option value="closest" {% if 'closest' == filters.sort %} selected {% endif %}>Closest</option>
+                          <option value="longest" {% if 'longest' == filters.sort %} selected {% endif %}>Longest Duration</option>
+                          <option value="shortest" {% if 'shortest' == filters.sort %} selected {% endif %}>Shortest Duration</option>
+                          <option value="highest" {% if 'highest' == filters.sort %} selected {% endif %}>Highest Price</option>
+                          <option value="lowest" {% if 'lowest' == filters.sort %} selected {% endif %}>Lowest Price</option>
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                        <button id="applyFilterBtn" class="btn btn-primary">Apply Filters</button>
+                      </div>
+                      <a href={% url 'offers_page' %} class="btn btn-secondary">Clear  Filters</a>
+                    </form>
+                  </div>
+                </section>
+              
+                <div class="container" style="flex: 1;">
+        
+                    <ul class="package-list">
+                        {% for offer in offers %}
+                        <li>
+                          <div class="package-card">
+            
+                            <figure class="card-banner">
+                                <img src="{{ offer.image.url }}" alt="Experience The Great Holiday On Beach" loading="lazy" style="width: 300px; height: 250px;">
+                            </figure>
+            
+                            <div class="card-content">
+            
+                              <h3 class="h3 card-title">{{ offer.titre }}</h3>
+            
+                              <p class="card-text">
+                                {{ offer.description }}
+                              </p>
+            
+                              <ul class="card-meta-list">
+            
+                                <li class="card-meta-item">
+                                  <div class="meta-box">
+                                    <ion-icon name="calendar"></ion-icon>
+                                    <p class="text">{{ offer.date_debut|date:"d M Y" }}</p>
+                                  </div>
+                                </li>
+            
+                                <li class="card-meta-item">
+                                  <div class="meta-box">
+                                    <ion-icon name="people"></ion-icon>
+            
+                                    <p class="text">pax: {{ offer.capacite }}</p>
+                                  </div>
+                                </li>
+            
+                                <li class="card-meta-item">
+                                  <div class="meta-box">
+                                    <ion-icon name="location"></ion-icon>
+            
+                                    <p class="text">{{ offer.lieu }}</p>
+                                  </div>
+                                </li>
+            
+                              </ul>
+            
+                            </div>
+            
+                            <div class="card-price">
+            
+                              {% comment %} <div class="wrapper">
+            
+                                <p class="reviews">(25 reviews)</p>
+            
+                                <div class="card-rating">
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                </div>
+            
+                              </div> {% endcomment %}
+            
+                              <p class="price">
+                                ${{ offer.prix }}
+                                <span>/ per person</span>
+                              </p>
+            
+                              <a class="btn btn-secondary" href="{% url 'offer_details' offer.id %}">Consulter</a>
+            
+                            </div>
+            
+                          </div>
+                        </li>
+                        {% endfor %}
+                      </ul>
+        
+                </div>
+              </section>      
+            </article>
+        </main>
+        
+        {%  include "pages/footer.html"  %}
+        
+    </main>
+    <script>
+        function scrollToSection() {
+            document.getElementById('package').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+    
+    
+</body>
+</html>

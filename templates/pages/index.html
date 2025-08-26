@@ -1,0 +1,309 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourly - Travel Agency</title>
+
+    <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+</head>
+
+<body id="top">
+
+  {%  include "pages/navbar.html"  %}
+
+    <main>
+        <main>
+            <article>
+        
+              <section class="hero" id="home">
+                <div class="container">
+        
+                  <h2 class="h1 hero-title">Journey to explore world</h2>
+        
+                  <p class="hero-text">
+                    Ac mi duis mollis. Sapiente? Scelerisque quae, penatibus? Suscipit class corporis nostra rem quos
+                    voluptatibus habitant?
+                    Fames, vivamus minim nemo enim, gravida lobortis quasi, eum.
+                  </p>
+        
+                  <div class="btn-group">
+                    <a href="{% url 'about_us_page' %}" class="btn btn-primary" style="text-decoration: none; color: white;">
+                      Learn more
+                    </a>
+        
+                    <button class="btn btn-secondary" onclick="scrollToSection()">Book now</button>
+                  </div>
+        
+                </div>
+              </section>
+        
+              <section class="tour-search" id="tour-search-section">
+                <div class="container">
+        
+                  <form action="{% url 'offers_page' %}" class="tour-search-form">
+                    <div class="input-wrapper">
+                        <label for="titre" class="input-label">Nom de L'Offre</label>
+                        <input type="text" name="titre" id="titre" placeholder="Entrer Titre" class="input-field">
+                    </div>
+                
+                    <div class="input-wrapper">
+                        <label for="destination" class="input-label">Destination</label>
+                        <input type="text" name="lieu" id="destination"  placeholder="Enter Destination" class="input-field">
+                    </div>
+                
+                    <div class="input-wrapper">
+                        <label for="checkin" class="input-label">Prix de l'Offre</label>
+                        <div class="d-flex">
+                          <input type="number" name="minPrice" class="input-field" style="width:90px; float:left; margin-right:5px" placeholder="Min" min="0" value = "{{filters.minPrice}}">
+                          <input type="number" name="maxPrice" class="input-field" style="width:90px;" placeholder="Max" min="0" value = "{{filters.maxPrice}}">
+                        </div>                      </div>
+                
+                    <div class="input-wrapper">
+                        <label for="checkout" class="input-label">Nombre De jours</label>
+                        <div class="d-flex">
+                          <input type="number" name="minDuration" class="input-field" style="width:90px; float:left; margin-right:5px" placeholder="Min" min="0" value = "{{filters.minPrice}}">
+                          <input type="number" name="maxDuration" class="input-field" style="width:90px;" placeholder="Max" min="0" value = "{{filters.maxPrice}}">
+                        </div>                      </div>
+                
+                    <button type="submit" class="btn btn-secondary">Cherche</button>
+                </form>
+        
+                </div>
+              </section>
+        
+              <section class="popular" id="destination">
+                <div class="container">
+        
+                  <h2 class="h2 section-title">Checkout Our Packeges</h2>
+        
+                  <p class="section-text">
+                    Fusce hic augue velit wisi quibusdam pariatur, iusto primis, nec nemo, rutrum. Vestibulum cumque laudantium.
+                    Sit ornare
+                    mollitia tenetur, aptent.
+                  </p>
+        
+                  <ul class="popular-list">
+                    {% for categorie in categories%}
+                    <li>
+                      <script>
+                        console.log("{{categorie.image.url}}")
+                      </script>
+                      <div class="popular-card">
+        
+                        <figure class="card-img">
+                          <img src="{{ categorie.image.url }}" alt="{{categorie.nom}}" loading="lazy">
+                        </figure>
+        
+                        <div class="card-content">
+        
+                          {% comment %} <div class="card-rating">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                          </div> {% endcomment %}
+        
+                          <h3 class="h3 card-title">
+                            <a href="/offers?categorie={{categorie.id}}">{{categorie.nom}}</a>
+                          </h3>
+        
+                          <p class="card-text">
+                            {{categorie.description|truncatechars:100}}
+                          </p>
+        
+                        </div>
+        
+                      </div>
+                    </li>
+                    {% endfor %}
+        
+                    
+        
+                  </ul>
+                  <div class="btn-group">
+                    <a href="{% url 'package_page' %}" class="btn btn-primary" style="text-decoration: none; color: white;">
+                      More Packeges
+                    </a>
+                  </div>
+        
+                </div>
+              </section>
+        
+              <section class="package" id="package">
+                <div class="container">
+        
+                  <p class="section-subtitle">Popular Offers</p>
+        
+                  <h2 class="h2 section-title">Checkout Our Offers</h2>
+        
+                  <p class="section-text">
+                    Fusce hic augue velit wisi quibusdam pariatur, iusto primis, nec nemo, rutrum. Vestibulum cumque laudantium.
+                    Sit ornare
+                    mollitia tenetur, aptent.
+                  </p>
+        
+                  <ul class="package-list">
+                    {% for offer in offers %}
+                    <li>
+                      <div class="package-card">
+        
+                        <figure class="card-banner">
+                          <img src="{{ offer.image.url }}" alt="{{offer.titre}}" loading="lazy" style="width: 300px; height: 250px;">
+                        </figure>
+        
+                        <div class="card-content">
+        
+                          <h3 class="h3 card-title">{{offer.titre}}</h3>
+        
+                          <p class="card-text">
+                            {{offer.description|truncatechars:200}}
+                          </p>
+        
+                          <ul class="card-meta-list">
+        
+                            <li class="card-meta-item">
+                              <div class="meta-box">
+                                <ion-icon name="time"></ion-icon>
+        
+                                <p class="text">{{offer.date_debut|date:"d M Y"}}</p>
+                              </div>
+                            </li>
+        
+                            <li class="card-meta-item">
+                              <div class="meta-box">
+                                <ion-icon name="people"></ion-icon>
+        
+                                <p class="text">{{offer.capacite}}0</p>
+                              </div>
+                            </li>
+        
+                            <li class="card-meta-item">
+                              <div class="meta-box">
+                                <ion-icon name="location"></ion-icon>
+        
+                                <p class="text">{{offer.lieu}}</p>
+                              </div>
+                            </li>
+        
+                          </ul>
+        
+                        </div>
+        
+                        <div class="card-price">
+        
+                          {% comment %} <div class="wrapper">
+        
+                            <p class="reviews">(25 reviews)</p>
+        
+                            <div class="card-rating">
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </div>
+        
+                          </div> {% endcomment %}
+        
+                          <p class="price">
+                            ${{offer.prix}}
+                            <span>/ per person</span>
+                          </p>
+        
+                          <a class="btn btn-secondary" href="{% url 'offer_details' offer.id %}">Consulter</a>
+        
+                        </div>
+        
+                      </div>
+                    </li>                 
+                    {% endfor %}
+                  </ul>
+        
+                  <button class="btn btn-primary" ><a style="color:white" href="{% url 'offers_page' %}">View All Offers</a></button>
+        
+                </div>
+              </section>     
+        
+              <section class="cta" id="contact">
+                <div class="container">
+        
+                  <div class="cta-content">
+                    <p class="section-subtitle">Call To Action</p>
+        
+                    <h2 class="h2 section-title">Ready For Unforgatable Travel. Remember Us!</h2>
+        
+                    <p class="section-text">
+                      Fusce hic augue velit wisi quibusdam pariatur, iusto primis, nec nemo, rutrum. Vestibulum cumque
+                      laudantium. Sit ornare
+                      mollitia tenetur, aptent.
+                    </p>
+                  </div>
+                  <a href="{% url 'contact_us_page' %}" class="btn btn-secondary" style="text-decoration: none; color: white;">
+                    Contact Us !
+                  </a>
+        
+                </div>
+              </section>
+        
+            </article>
+        </main>
+        
+        {%  include "pages/footer.html"  %}
+        
+    </main>
+    
+</body>
+</html>
+
+
+<script>
+  function scrollToSection() {
+    var section = document.getElementById('tour-search-section');
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  document.addEventListener("DOMContentLoaded", function() {
+    const dateDepartInput = document.getElementById("checkin");
+    const dateRetourInput = document.getElementById("checkout");
+
+    // Ajouter un écouteur d'événements à la date de départ
+    dateDepartInput.addEventListener("input", function() {
+      // Récupérer la date de départ sélectionnée
+      const dateDepart = new Date(dateDepartInput.value);
+
+      // Vérifier si la date de départ est dans le passé
+      const aujourdHui = new Date();
+      if (dateDepart < aujourdHui) {
+        // Si la date de départ est dans le passé, réinitialiser à la date d'aujourd'hui
+        dateDepartInput.value = aujourdHui.toISOString().split('T')[0];
+      }
+
+      // Définir la date de retour minimale comme Date De Départ + 1 jour
+      const dateRetourMin = new Date(dateDepart);
+      dateRetourMin.setDate(dateRetourMin.getDate() + 1);
+
+      // Formater la date minimale pour l'input de date
+      const jour = String(dateRetourMin.getDate()).padStart(2, '0');
+      const mois = String(dateRetourMin.getMonth() + 1).padStart(2, '0');
+      const annee = dateRetourMin.getFullYear();
+      const dateRetourMinFormatted = `${annee}-${mois}-${jour}`;
+
+      // Appliquer la date minimale à l'input de date de retour
+      dateRetourInput.min = dateRetourMinFormatted;
+    });
+  });
+</script>
+
+
+

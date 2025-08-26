@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourly - Travel Agency</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+            #sidebar{
+                width: 20%;
+                flex: 0 0 auto;
+                padding: 10px;
+                margin: 0;
+                float: left;
+            }
+            #filterSection div {
+                margin-bottom: 25px; /* Adjust the value as needed to control the space between filters */
+            }
+
+    </style>
+    <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+</head>
+<body id="top" onload="calculPrix()">
+
+    {%  include "pages/navbar.html"  %}
+
+    <main>
+        <main>
+            <article>
+                <section class="hero" id="home">  
+                    {% comment %} <div class="container" style="flex: 1;width:1000px"> {% endcomment %}
+                        <div class="package-card mx-5 " style="margin-top:100px; margin-bottom: 0px; height: 300px;">
+                          <figure class="card-banner">
+                            <img src="{{ offer.image.url }}" alt="Experience The Great Holiday On Beach" loading="lazy" style="width: 300px; height: 300px;">
+                          </figure>
+
+                          <div class="card-content" style="margin-left:-25%;">
+
+                            <h3 class="h3 card-title">{{ offer.titre }}</h3>
+
+                            <p class="card-text">
+                              {{ offer.description }}
+                            </p>
+
+                            <ul class="card-meta-list">
+
+                              <li class="card-meta-item">
+                                <div class="meta-box">
+                                  <ion-icon name="calendar"></ion-icon>
+                                  <p class="text">Start Date: {{ offer.date_debut|date:"d M Y" }}</p>
+                                </div>
+                              </li>
+
+                              <li class="card-meta-item">
+                                <div class="meta-box">
+                                  <ion-icon name="calendar"></ion-icon>
+                                  <p class="text">End Date: {{ offer.date_fin|date:"d M Y" }}</p>
+                                </div>
+                              </li>
+
+                              <li class="card-meta-item">
+                                <div class="meta-box">
+                                  <ion-icon name="people"></ion-icon>
+                                  <p class="text">Capacity: {{ offer.capacite }}</p>
+                                </div>
+                              </li>
+
+                              <li class="card-meta-item">
+                                <div class="meta-box">
+                                  <ion-icon name="location"></ion-icon>
+                                  <p class="text">Location: {{ offer.lieu }}</p>
+                                </div>
+                              </li>
+
+                              <li class="card-meta-item">
+                                <div class="meta-box">
+                                  <ion-icon name="pricetag"></ion-icon>
+                                  <p class="text">Category: {{ offer.categorie.nom }}</p>
+                                </div>
+                              </li>
+
+                              <li class="card-meta-item">
+                                <div class="meta-box">
+                                  <ion-icon name="percent"></ion-icon>
+                                  <p class="text">Promotion: {{ offer.promotion.remise }}% off</p>
+                                </div>
+                              </li>
+
+                            </ul>
+
+                          </div>
+
+                          <div class="card-price">
+
+                            <p class="price">
+                              ${{ offer.prix }}
+                              <span>/ per person</span>
+                            </p>
+
+                          </div>
+
+                        </div>
+                        <form action="{%url 'checkout_page'%}" method="POST">
+                          {%csrf_token%}
+                        <div class="package-card mx-5 p-3" style="margin-top:-100px">
+                          <div>
+                            <h5>Number of People</h5>
+                            <input type="number" id="nombre_personnes" name="nombre_personnes" class="form-control w-50" style="margin:auto" placeholder="" min="1" max="{{offer.capacite}}" value="1" onchange="calculPrix()" onkeyup="calculPrix()">
+                          </div>
+                          <div>
+                            <h5>Total Price</h5>
+                            <input type="number" id="prix_total" name="prix_total" value="" class="form-control w-50" style="margin:auto" placeholder="" min="0" disabled>
+                          </div>
+                          <input type="hidden" id="offerId" name="offerId" value="{{offer.id}}">
+                          <div style="margin-top:15px">
+                            <button type="submit" class="btn btn-secondary">Payment</button>
+                          </div>
+                        </form>
+                          <script>
+                            function calculPrix() {
+                              const offerPrice = parseInt("{{ offer.prix }}");
+                              const offerCapacity = parseInt("{{ offer.capacite }}");
+                              const promotion = parseFloat("{{ offer.promotion.remise }}");
+                              const nb_p = document.getElementById('nombre_personnes');
+                              const n = parseInt(nb_p.value);
+                              
+                              if (n !== "") {
+                                let quantity = n;
+                                if (quantity > offerCapacity) {
+                                  quantity = offerCapacity;
+                                }
+                                if (quantity < 1) {
+                                  quantity = 1;
+                                }
+                                nb_p.value = quantity;
+                                const total = quantity * offerPrice;
+                                if (promotion) {
+                                  document.getElementById('prix_total').value = total - total * promotion;
+                                }
+                                else {
+                                  document.getElementById('prix_total').value = total;
+                                }
+                              }
+                            }
+                          </script>
+
+                        </div>
+      
+              {% comment %} </div>   {% endcomment %}
+                  </section>    
+            </article>
+        </main>
+        
+        {%  include "pages/footer.html"  %}
+        
+    </main>
+    
+    
+</body>
+</html>
