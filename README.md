@@ -1,6 +1,6 @@
 # Travel Reservation Platform (Django)
 
-A web-based travel reservation platform built with Django, designed to provide users with an easy way to search for and book travel destinations. The platform features user authentication, destination browsing, and real-time booking management, offering a seamless and efficient travel experience.
+A web-based travel reservation platform built with Django, designed to provide users with an easy way to search for and book travel destinations. The platform features user authentication, destination browsing, and real-time booking management, offering a seamless and efficient travel experience...
 
 ## Features
 
